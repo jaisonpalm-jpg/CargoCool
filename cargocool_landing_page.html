@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CargoCool | Cold Storage. Road Ready.</title>
+  <meta name="description" content="CargoCool is a rugged underbody refrigeration and storage system for box trucks and semi-trailers." />
+  <style>
+    :root {
+      --bg: #08111c;
+      --bg2: #0d1a2b;
+      --panel: rgba(255,255,255,.06);
+      --panel-border: rgba(255,255,255,.12);
+      --text: #eaf2ff;
+      --muted: #a8b6cc;
+      --blue: #0ea5e9;
+      --blue2: #38bdf8;
+      --dark: #0b0f14;
+      --line: rgba(255,255,255,.08);
+      --success: #7dd3fc;
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --radius: 24px;
+      --max: 1180px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(14,165,233,.18), transparent 35%),
+        radial-gradient(circle at 100% 20%, rgba(56,189,248,.12), transparent 25%),
+        linear-gradient(180deg, #09111b 0%, #07101a 100%);
+      line-height: 1.5;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(100% - 32px, var(--max)); margin: 0 auto; }
+    .nav {
+      position: sticky; top: 0; z-index: 20;
+      backdrop-filter: blur(14px);
+      background: rgba(8,17,28,.7);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 20px; padding: 14px 0;
+    }
+    .nav img { height: 42px; width: auto; }
+    .nav-links {
+      display: flex; gap: 22px; align-items: center; color: var(--muted); font-size: 14px;
+    }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 14px 20px; border-radius: 999px; font-weight: 700;
+      border: 1px solid transparent; transition: .2s ease;
+    }
+    .button.primary {
+      background: linear-gradient(135deg, var(--blue), var(--blue2));
+      color: white; box-shadow: 0 10px 24px rgba(14,165,233,.25);
+    }
+    .button.secondary {
+      border-color: rgba(255,255,255,.18); color: var(--text); background: rgba(255,255,255,.03);
+    }
+    .button:hover { transform: translateY(-1px); }
+    .hero {
+      padding: 54px 0 28px;
+    }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.05fr .95fr; gap: 42px; align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 12px; border-radius: 999px; font-size: 12px; font-weight: 700;
+      color: var(--success); background: rgba(14,165,233,.12); border: 1px solid rgba(56,189,248,.18);
+      text-transform: uppercase; letter-spacing: .1em;
+    }
+    h1 {
+      font-size: clamp(40px, 6vw, 72px); line-height: .95; margin: 18px 0 16px; letter-spacing: -0.04em;
+    }
+    .lead { font-size: 18px; color: var(--muted); max-width: 640px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 28px; }
+    .stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 28px;
+    }
+    .stat {
+      background: var(--panel); border: 1px solid var(--panel-border);
+      padding: 16px 18px; border-radius: 18px; box-shadow: var(--shadow);
+    }
+    .stat strong { display: block; font-size: 24px; margin-bottom: 4px; }
+    .stat span { color: var(--muted); font-size: 14px; }
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03));
+      border: 1px solid var(--panel-border);
+      border-radius: 28px; padding: 20px; box-shadow: var(--shadow);
+    }
+    .hero-card img {
+      border-radius: 18px; background: #0d1520; border: 1px solid rgba(255,255,255,.08);
+    }
+    .hero-note {
+      display: flex; gap: 16px; justify-content: space-between; align-items: center;
+      margin-top: 14px; color: var(--muted); font-size: 13px;
+    }
+    section { padding: 70px 0; }
+    .section-head { margin-bottom: 28px; }
+    .section-head h2 {
+      margin: 0 0 10px; font-size: clamp(28px, 4vw, 44px); line-height: 1.05; letter-spacing: -.03em;
+    }
+    .section-head p { margin: 0; color: var(--muted); max-width: 760px; }
+    .grid-3 {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px;
+    }
+    .card {
+      background: var(--panel); border: 1px solid var(--panel-border);
+      padding: 22px; border-radius: 22px; box-shadow: var(--shadow);
+    }
+    .card h3 { margin: 0 0 10px; font-size: 20px; }
+    .card p { margin: 0; color: var(--muted); }
+    .features {
+      display: grid; grid-template-columns: 1.05fr .95fr; gap: 22px;
+    }
+    .feature-list {
+      display: grid; gap: 14px;
+    }
+    .feature-item {
+      display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: start;
+      background: var(--panel); border: 1px solid var(--panel-border);
+      border-radius: 18px; padding: 18px;
+    }
+    .icon {
+      width: 44px; height: 44px; border-radius: 14px;
+      display: grid; place-items: center; font-weight: 800;
+      background: linear-gradient(135deg, rgba(14,165,233,.22), rgba(56,189,248,.08));
+      border: 1px solid rgba(56,189,248,.22);
+      color: var(--blue2);
+    }
+    .feature-item h4 { margin: 0 0 6px; font-size: 17px; }
+    .feature-item p { margin: 0; color: var(--muted); font-size: 14px; }
+    .spec-wrap {
+      display: grid; grid-template-columns: .92fr 1.08fr; gap: 22px;
+    }
+    .spec-table {
+      width: 100%; border-collapse: collapse; overflow: hidden;
+      border-radius: 18px; border: 1px solid var(--panel-border);
+      background: var(--panel); box-shadow: var(--shadow);
+    }
+    .spec-table td {
+      padding: 16px 18px; border-bottom: 1px solid var(--line);
+    }
+    .spec-table tr:last-child td { border-bottom: 0; }
+    .spec-table td:first-child { color: var(--muted); width: 38%; }
+    .use-cases {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .use-case {
+      border-radius: 20px; padding: 20px; min-height: 150px;
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      border: 1px solid var(--panel-border);
+      box-shadow: var(--shadow);
+    }
+    .use-case strong { display: block; margin-bottom: 8px; font-size: 18px; }
+    .use-case p { margin: 0; color: var(--muted); font-size: 14px; }
+    .cta {
+      padding-bottom: 90px;
+    }
+    .cta-box {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(14,165,233,.25), transparent 30%),
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border: 1px solid var(--panel-border);
+      border-radius: 30px; padding: 34px; box-shadow: var(--shadow);
+      display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: center;
+    }
+    .cta-box h2 { margin: 0 0 10px; font-size: clamp(28px, 4vw, 46px); line-height: 1.02; }
+    .cta-box p { margin: 0; color: var(--muted); max-width: 620px; }
+    .cta-actions { display: flex; gap: 12px; justify-content: flex-end; flex-wrap: wrap; }
+    footer {
+      border-top: 1px solid var(--line); padding: 22px 0 36px; color: var(--muted); font-size: 14px;
+    }
+    footer .foot { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; }
+    @media (max-width: 980px) {
+      .hero-grid, .features, .spec-wrap, .cta-box {
+        grid-template-columns: 1fr;
+      }
+      .cta-actions { justify-content: flex-start; }
+      .grid-3, .use-cases { grid-template-columns: 1fr 1fr; }
+      .nav-links a:not(.button) { display: none; }
+    }
+    @media (max-width: 640px) {
+      .stats, .grid-3, .use-cases { grid-template-columns: 1fr; }
+      .nav img { height: 36px; }
+      .button { width: 100%; }
+      .hero-actions { flex-direction: column; }
+      .cta-box { padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#top" aria-label="CargoCool home">
+        <img src="a_digital_vector_logo_for_cargocool_features_the_b.png" alt="CargoCool logo" />
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#specs">Specs</a>
+        <a href="#use-cases">Use Cases</a>
+        <a href="#contact" class="button primary">Get a Quote</a>
+      </div>
+    </div>
+  </nav>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Underbody Refrigeration + Storage</div>
+          <h1>Cold Storage.<br />Road Ready.</h1>
+          <p class="lead">
+            CargoCool transforms unused underbody space into a rugged, lockable refrigeration and storage system for box trucks and semi-trailers.
+            Built for weather resistance, daily abuse, and long-haul reliability.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#contact">Request Pricing</a>
+            <a class="button secondary" href="CargoCool_Premium_Brochure.pdf">Download Brochure</a>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <strong>12V</strong>
+              <span>Direct compressor refrigeration</span>
+            </div>
+            <div class="stat">
+              <strong>Rear vented</strong>
+              <span>Protected airflow path for weather defense</span>
+            </div>
+            <div class="stat">
+              <strong>Lockable</strong>
+              <span>Compression latches and road-ready hardware</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <img src="a_digital_photograph_showcases_an_under_truck_stor.png" alt="CargoCool under-truck refrigeration unit render" />
+          <div class="hero-note">
+            <span>Concept render shown</span>
+            <span>Box truck + semi-trailer applications</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <h2>Built for real trucking conditions.</h2>
+          <p>
+            CargoCool is designed around the realities of road spray, vibration, heat, debris, and long service intervals.
+            It is meant to mount under the body of a box truck or under a semi-trailer without wasting interior cargo space.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <div class="card">
+            <h3>Weather sealed</h3>
+            <p>Fully enclosed refrigerator chamber, weather-protected construction, and rear vent routing to reduce direct water intrusion.</p>
+          </div>
+          <div class="card">
+            <h3>Rugged mounting</h3>
+            <p>Frame-mounted bracket strategy with reinforced structure for extensive road travel and repeated vibration cycles.</p>
+          </div>
+          <div class="card">
+            <h3>Dual function design</h3>
+            <p>Dry storage on one side, refrigerated storage on the other, so drivers get utility and cooling in one underbody system.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="container">
+        <div class="section-head">
+          <h2>Core features</h2>
+          <p>
+            The first CargoCool configuration balances refrigeration capacity, secure storage, and serviceability while staying low-profile enough for underbody installation.
+          </p>
+        </div>
+
+        <div class="features">
+          <div class="feature-list">
+            <div class="feature-item">
+              <div class="icon">01</div>
+              <div>
+                <h4>12V compressor refrigeration</h4>
+                <p>Efficient direct DC refrigeration designed for mobile use, with protected rear venting and a sealed cold chamber.</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="icon">02</div>
+              <div>
+                <h4>Lockable access doors</h4>
+                <p>Storage door lifts upward with gas struts, while the refrigerator uses a separate insulated access door with locking hardware.</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="icon">03</div>
+              <div>
+                <h4>Road-ready construction</h4>
+                <p>Engineered for demanding travel with reinforced framing, weather sealing, service access, and underbody mounting brackets.</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="icon">04</div>
+              <div>
+                <h4>Space-saving installation</h4>
+                <p>Uses external underbody space so drivers and fleets gain refrigerated utility without sacrificing interior cargo area.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 style="margin-bottom:14px;">Why fleets will care</h3>
+            <p style="margin-bottom:18px;">
+              CargoCool supports long-haul convenience, food and beverage storage, mobile service work, and specialty logistics needs in one durable enclosure.
+            </p>
+            <div class="feature-list">
+              <div class="feature-item">
+                <div class="icon">A</div>
+                <div>
+                  <h4>Driver convenience</h4>
+                  <p>Cold drinks, meals, and secure gear storage in one system.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="icon">B</div>
+                <div>
+                  <h4>Fleet utility</h4>
+                  <p>Ideal for routes, service units, and specialty transport operations.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="icon">C</div>
+                <div>
+                  <h4>Brandable platform</h4>
+                  <p>Built to grow into a product line with future connected features.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="specs">
+      <div class="container">
+        <div class="section-head">
+          <h2>Baseline product specifications</h2>
+          <p>
+            These specs reflect the current product concept and can be adapted into Core, Max, or Pro variants later.
+          </p>
+        </div>
+
+        <div class="spec-wrap">
+          <table class="spec-table" aria-label="CargoCool specifications">
+            <tr><td>Overall length</td><td>72 inches</td></tr>
+            <tr><td>Overall depth</td><td>22–24 inches</td></tr>
+            <tr><td>Recommended height</td><td>20–24 inches underbody profile</td></tr>
+            <tr><td>Power</td><td>12V DC refrigeration system</td></tr>
+            <tr><td>Construction</td><td>Aluminum or powder-coated steel</td></tr>
+            <tr><td>Mounting</td><td>Frame-mounted bracket system</td></tr>
+            <tr><td>Vent strategy</td><td>Rear vent with protected airflow path</td></tr>
+            <tr><td>Access</td><td>Lockable storage + separate refrigerator access</td></tr>
+          </table>
+
+          <div class="card">
+            <h3>Designed to scale</h3>
+            <p style="margin-bottom:18px;">
+              CargoCool is set up to become a full product family. The first configuration can lead into multiple trims and sizes without changing the core brand.
+            </p>
+            <div class="feature-list">
+              <div class="feature-item">
+                <div class="icon">Core</div>
+                <div>
+                  <h4>Standard product</h4>
+                  <p>The first launch version for early customers, fleets, and field testing.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="icon">Max</div>
+                <div>
+                  <h4>Higher cold capacity</h4>
+                  <p>Future variant with a larger fridge section and less dry storage.</p>
+                </div>
+              </div>
+              <div class="feature-item">
+                <div class="icon">Pro</div>
+                <div>
+                  <h4>Premium configuration</h4>
+                  <p>Future trim with upgraded materials, controls, and integrated monitoring.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="use-cases">
+      <div class="container">
+        <div class="section-head">
+          <h2>Who it is built for</h2>
+          <p>
+            CargoCool is aimed at working operators who need secure, durable, mobile refrigeration without giving up cargo space.
+          </p>
+        </div>
+
+        <div class="use-cases">
+          <div class="use-case">
+            <strong>Box truck fleets</strong>
+            <p>Gain external storage and refrigeration while preserving interior box volume.</p>
+          </div>
+          <div class="use-case">
+            <strong>Owner-operators</strong>
+            <p>Keep meals, drinks, and gear secure and accessible over long routes.</p>
+          </div>
+          <div class="use-case">
+            <strong>Semi-trailers</strong>
+            <p>Use under-trailer space for ruggedized cooling and storage applications.</p>
+          </div>
+          <div class="use-case">
+            <strong>Mobile service units</strong>
+            <p>Carry temperature-sensitive supplies and secure tools in one underbody system.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <div class="container">
+        <div class="cta-box">
+          <div>
+            <h2>Ready to launch CargoCool?</h2>
+            <p>
+              Use this page as your first sales landing page, quote page, or preorder page. Add your contact details, lead form, pricing, and installation availability when you are ready.
+            </p>
+          </div>
+          <div class="cta-actions">
+            <a class="button primary" href="mailto:hello@cargocool.co?subject=CargoCool%20Quote%20Request">Request a Quote</a>
+            <a class="button secondary" href="CargoCool_Premium_Brochure.pdf">Download Brochure</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <div>© CargoCool. Cold Storage. Road Ready.</div>
+      <div>Built for box trucks, semi-trailers, and fleet applications.</div>
+    </div>
+  </footer>
+</body>
+</html>
